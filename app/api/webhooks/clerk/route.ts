@@ -1,4 +1,3 @@
-import { createdAt, updatedAt } from "@/drizzle/schemaHelpers";
 import { deleteUser, upsertUser } from "@/features/users/db";
 import { verifyWebhook } from "@clerk/nextjs/webhooks"
 import { NextRequest } from "next/server"
@@ -35,7 +34,8 @@ export async function POST(request: NextRequest) {
             default:
                 console.log(`Unhandled event type: ${event.type}`);
         }
-    } catch {
+    } catch (error) {
+        console.error("Webhook error:", error);
         return new Response("Invalid webhook", { status: 400 });
     }
 
