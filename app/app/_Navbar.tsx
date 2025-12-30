@@ -10,7 +10,7 @@ import {
 import Link from "next/link"
 import { SignOutButton, useClerk } from "@clerk/nextjs"
 import { BrainCircuit, LogOut, User } from "lucide-react"
-import { UserAvatar } from "@/components/UserAvatar"
+import { UserAvatar } from "@/features/users/components/UserAvatar"
 
 export function Navbar({ user }: { user: { name: string, imageUrl: string } }) {
     const { openUserProfile } = useClerk()
