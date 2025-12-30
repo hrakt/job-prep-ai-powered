@@ -8,7 +8,7 @@ export default async function OnboardingPage() {
     if (userId == null) { redirect('/') }
     if (user != null) { redirect('/app') }
 
-    return (<div className="container flex flex-col items-center justify-center gap-4">
+    return (<div className="container flex flex-col items-center justify-center h-screen gap-4">
         <h1 className="text-4xl">Creating your account...</h1>
         <OnboardingClient userId={userId} />
     </div>)
