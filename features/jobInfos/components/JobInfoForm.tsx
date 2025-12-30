@@ -23,17 +23,19 @@ import {
 import { Textarea } from "@/components/ui/textarea"
 import { jobInfoFormSchema } from '../schemas';
 import z from "zod"
-import { experienceLevels } from "@/drizzle/schema/jobInfo"
+import { experienceLevels, JobInfoTable } from "@/drizzle/schema/jobInfo"
 import { formatExperienceLevel } from "@/features/users/components/lib/formatters"
 import { LoadingSwap } from "@/components/ui/loading-swap"
+import { createJobInfo, updateJobInfo } from "../actions"
+import { toast } from "sonner"
 
 
 type JobInfoFormValues = z.infer<typeof jobInfoFormSchema>
 
-export function JobInfoForm() {
+export function JobInfoForm({ jobInfo }: { jobInfo?: Pick<typeof JobInfoTable.$inferSelect, "id" | "name" | "title" | "experienceLevel" | "description"> }) {
     const form = useForm<JobInfoFormValues>({
         resolver: zodResolver(jobInfoFormSchema),
-        defaultValues: {
+        defaultValues: jobInfo ?? {
             name: "",
             title: null,
             description: "",
@@ -41,9 +43,12 @@ export function JobInfoForm() {
         },
     })
 
-    function onSubmit(data: JobInfoFormValues) {
-        console.log(data)
-        // TODO: Implement submit action
+    async function onSubmit(values: JobInfoFormValues) {
+        const action = jobInfo ? updateJobInfo.bind(null, jobInfo.id) : createJobInfo;
+        const res = await action(values);
+        if (res.error) {
+            toast.error(res.message);
+        }
     }
 
     return (
@@ -135,7 +140,7 @@ export function JobInfoForm() {
                     )}
                 />
 
-                <Button disabled={!form.formState.isSubmitting} type="submit" className="w-full">
+                <Button disabled={form.formState.isSubmitting} type="submit" className="w-full">
                     <LoadingSwap isLoading={form.formState.isSubmitting} > Save Job Information
                     </LoadingSwap>
                 </Button>
