@@ -5,7 +5,6 @@ import { jobInfoFormSchema } from "./schemas";
 import { insertJobInfo, updateJobInfo as updatedJobInfoDb } from "./db";
 import { redirect } from "next/navigation";
 import z from "zod";
-import { id } from "@/drizzle/schemaHelpers";
 import { and, eq } from "drizzle-orm";
 import { JobInfoTable } from "@/drizzle/schema/jobInfo";
 import { db } from "@/drizzle/db";
