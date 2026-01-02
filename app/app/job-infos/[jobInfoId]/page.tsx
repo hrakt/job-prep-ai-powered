@@ -1,5 +1,6 @@
 import { getCurrentUser } from "@/app/services/clerk/lib/getCurrentUser";
 import { BackLink } from "@/components/BackLink"
+import { Skeleton } from "@/components/Skeleton";
 import { SuspendedItem } from "@/components/SuspendedItem";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -24,11 +25,6 @@ const options = [
         label: "Practice Interviewing",
         description: "Simulate real interview with Ai powered mock interviews.",
         href: "interview"
-    },
-    {
-        label: "Answer Technical Questions",
-        description: "Challenge yourself with practice questions tailored to your job description.",
-        href: "questions"
     },
     {
         label: "Refine Your Resume",
@@ -62,33 +58,27 @@ export default async function JobInfoPage({ params }: { params: Promise<{ jobInf
                         <h1 className="text-3xl md:text-4xl">
                             <SuspendedItem
                                 item={jobInfo}
-                                fallback={
-                                    <div>Loading...</div>}
+                                fallback={<Skeleton className="w-48" />}
                                 result={j => j.name}
                             />
                         </h1>
                         <div className="flex gap-2">
                             <SuspendedItem
                                 item={jobInfo}
-                                fallback={
-                                    <div>Loading...</div>}
-                                result={j =>
-                                    <Badge variant="secondary">
-                                        {formatExperienceLevel(j.experienceLevel)}
-                                    </Badge>}
+                                fallback={<Skeleton className="w-12" />}
+                                result={j => <Badge variant="secondary">{formatExperienceLevel(j.experienceLevel)}</Badge>}
                             />
                             <SuspendedItem
                                 item={jobInfo}
                                 fallback={null}
-                                result={j => (<Badge variant="secondary">{j.title}</Badge>)}
+                                result={j => { return j.title && <Badge variant="secondary">{j.title}</Badge> }}
                             />
                         </div>
                     </div>
                     <p className="text-muted-foreground line-clamp-3">
                         <SuspendedItem
                             item={jobInfo}
-                            fallback={
-                                <div>Loading...</div>}
+                            fallback={<Skeleton className="w-96" />}
                             result={j => (
                                 j.description
                             )}
