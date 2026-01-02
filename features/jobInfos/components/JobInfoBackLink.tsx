@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { BackLink } from "./BackLink";
+import { BackLink } from "../../../components/BackLink";
 import { Suspense } from "react";
 import { getJobInfoIdTag } from "@/features/jobInfos/dbCache";
 import { db } from "@/drizzle/db";
@@ -12,7 +12,6 @@ export function JobInfoBackLink({ jobInfoId, className }: { jobInfoId: string; c
         <BackLink href={`/app/job-infos/${jobInfoId}`} className={cn("mb-4", className)}>
             <Suspense fallback="Job Description">
                 <JobName jobInfoId={jobInfoId} />
-
             </Suspense>
         </BackLink>
     )

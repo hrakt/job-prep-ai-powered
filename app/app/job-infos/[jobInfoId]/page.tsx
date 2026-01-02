@@ -34,7 +34,7 @@ const options = [
     {
         label: "Update Job Description",
         description: "This should only be used for minor updates",
-        href: "update"
+        href: "edit"
     },
 ];
 
